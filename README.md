@@ -2,6 +2,7 @@
 
 ### Install Dependencies
 ---------------------------------------
+First, please, create a virtualenv to project.
 
 ```sudo apt-get install build-essential```
 <br>
