@@ -12,10 +12,21 @@ class QuotesSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        for sympla in response.css('div.input-group-btn'):
-            yield {
-                'span': str(sympla.css('span::text').extract()).encode('utf8'),
-                'a': str(sympla.css('a::text').extract()).encode('utf8')
-                # 'author': sympla.css('span small::text').extract_first(),
-                # 'tags': sympla.css('div.tags a.tag::text').extract(),
+        yield self.get_data_url_events(response)
+
+    def get_data_url_next_page(self, response):
+        for res in response.css('button.btn-dark-transparent'):
+            return {
+                'url': res.root.values()[1]
             }
+
+    def get_data_url_events(self, response):
+        urls = {}
+        response = response.css('a.event-box-link').xpath('@href').extract()
+        for index, res in enumerate(response):
+            urls.update({'url_{}'.format(index): res})
+        return urls
+    
+    def get_next_page_url(self, response):
+        for res in response.css('button.btn-dark-transparent'):
+           return res.root.values()[1] 
