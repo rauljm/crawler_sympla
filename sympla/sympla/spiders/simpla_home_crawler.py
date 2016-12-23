@@ -12,8 +12,10 @@ class QuotesSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        page = response.url.split("/")[-2]
-        filename = 'sympla-%s.html' % page
-        with open(filename, 'wb') as f:
-            f.write(response.body)
-        self.log('Saved file %s' % filename)
+        for sympla in response.css('div.input-group-btn'):
+            yield {
+                'span': str(sympla.css('span::text').extract()).encode('utf8'),
+                'a': str(sympla.css('a::text').extract()).encode('utf8')
+                # 'author': sympla.css('span small::text').extract_first(),
+                # 'tags': sympla.css('div.tags a.tag::text').extract(),
+            }
