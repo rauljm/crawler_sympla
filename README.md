@@ -14,4 +14,9 @@ First, please, create a virtualenv to project and follow the instructions below.
 <br>
 ```sudo pip install Scrapy```
 
+### Examples
+<br>
+scrapy crawl sympla_generate_url -o urls_sp.json -a complement=sao-paulo-sp
+<br>
+scrapy crawl sympla_catch_data -o sp_events.csv -a file=urls_sp
 
