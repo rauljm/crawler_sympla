@@ -12,11 +12,7 @@ class SymplaGenrateUrlsSpider(scrapy.Spider):
         self.complement = complement
 
     def start_requests(self):
-        if not self.complement:
-            url = 'http://www.sympla.com.br/eventos/sao-paulo-sp'
-        else:
-            url = 'http://www.sympla.com.br/eventos/{}'.format(self.complement)
-
+        url = 'http://www.sympla.com.br/eventos/{}'.format(self.complement)
         yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):

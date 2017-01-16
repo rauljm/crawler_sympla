@@ -13,5 +13,3 @@ First, please, create a virtualenv to project and follow the instructions below.
 ```sudo pip install cryptography```
 <br>
 ```sudo pip install Scrapy```
-
-
