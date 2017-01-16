@@ -2,6 +2,7 @@ import os
 import scrapy
 import json
 import random
+from utils import cleanhtml
 
 
 class SymplaGenrateUrlsSpider(scrapy.Spider):
@@ -82,6 +83,10 @@ class SymplaCatchDataSpider(scrapy.Spider):
     def save_data_from_event(self, response):
         event = {}
         payment = response.css('form span::text').extract()
+        description = response.css(
+                'div.container.border-top.border-left.border-right.event-section p'
+            ).extract()
+        description = cleanhtml(description)
 
         event.update(
             {'event_name':
@@ -91,11 +96,8 @@ class SymplaCatchDataSpider(scrapy.Spider):
         event.update(
             {'event_local': response.css('p.margin-bottom-20-xs::text').extract()[1]}
         )
-        event.update(
-            {'event_description': response.css(
-                'div.container.border-top.border-left.border-right.event-section p'
-            ).extract()}
-        )
+        event.update({'event_description': description})
+
         event.update({'event_productor': response.css('h4.kill-top-margin::text').extract()[2]})
         event.update({'other_informations_productor': response.css('p.text-center-xs.text-left-md::text').extract()})
         event.update({'link': response.url})
