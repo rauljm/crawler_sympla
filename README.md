@@ -16,6 +16,10 @@ First, please, create a virtualenv to project and follow the instructions below.
 
 ### Examples
 <br>
-scrapy crawl sympla_generate_url -o urls_sp.json -a complement=sao-paulo-sp
+The first thing that you need to do is generate a file with entire urls from the city that you want.
+
+```scrapy crawl sympla_generate_url -o urls_sp.json -a complement=sao-paulo-sp```
 <br>
-scrapy crawl sympla_catch_data -o sp_events.csv -a file=urls_sp
+So, you be able to mount your csv file with informations about events in the city.
+
+```scrapy crawl sympla_catch_data -o sp_events.csv -a file=urls_sp```
